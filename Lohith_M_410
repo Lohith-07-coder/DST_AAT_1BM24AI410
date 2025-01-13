@@ -1,0 +1,101 @@
+# CODE FOR Balanced Brackets
+import math
+import os
+import random
+import re
+import sys
+def isBalanced(s):    
+    stack = []
+    matching_bracket = {')': '(', '}': '{', ']': '['}
+    for char in s:
+        if char in "({[":
+            stack.append(char)
+        elif char in ")}]":
+            if not stack or stack[-1] != matching_bracket[char]:
+                return "NO"
+            stack.pop()
+    return "YES" if not stack else "NO"
+if __name__ == '__main__':
+    fptr = open(os.environ['OUTPUT_PATH'], 'w')
+    t = int(input().strip())
+    for t_itr in range(t):
+        s = input()
+        result = isBalanced(s)
+        fptr.write(result + '\n')
+    fptr.close()
+
+# CODE FOR  Queue using Two Stacks 
+
+import math
+import os
+import random
+import re
+import sys
+class QueueUsingTwoStacks:
+    def __init__(self):
+        self.stack1 = []  # Primary stack
+        self.stack2 = []  # Secondary stack for reversing order
+
+    def enqueue(self, value):
+        self.stack1.append(value)
+
+    def dequeue(self):
+        if not self.stack2:
+            while self.stack1:
+                self.stack2.append(self.stack1.pop())
+        return self.stack2.pop()
+
+    def front(self):
+        if not self.stack2:
+            while self.stack1:
+                self.stack2.append(self.stack1.pop())
+        return self.stack2[-1]
+if __name__ == '__main__':
+    q = int(input().strip())
+    queue = QueueUsingTwoStacks()
+    for _ in range(q):
+        query = input().strip().split()
+        query_type = int(query[0])
+        if query_type == 1:
+            queue.enqueue(int(query[1]))
+        elif query_type == 2:
+            queue.dequeue()
+        elif query_type == 3:
+            print(queue.front())
+
+# CODE FOR Game of Two Stacks
+
+import math
+import os
+import random
+import re
+import sys
+def twoStacks(maxSum, a, b):
+    sum_so_far = 0
+    count = 0
+    i = 0
+    j = 0
+    while i < len(a) and sum_so_far + a[i] <= maxSum:
+        sum_so_far += a[i]
+        i += 1
+        count += 1
+    max_count = count
+    while j < len(b) and (sum_so_far + b[j] <= maxSum or i > 0):
+        sum_so_far += b[j]
+        j += 1
+        count += 1
+        while sum_so_far > maxSum and i > 0:
+            i -= 1
+            sum_so_far -= a[i]
+            count -= 1
+        max_count = max(max_count, count)
+    return max_count
+if __name__ == '__main__':
+    g = int(input().strip())
+    for _ in range(g):
+        n, m, maxSum = map(int, input().strip().split())
+        a = list(map(int, input().strip().split()))
+        b = list(map(int, input().strip().split()))
+        result = twoStacks(maxSum, a, b
+        print(result)
+
